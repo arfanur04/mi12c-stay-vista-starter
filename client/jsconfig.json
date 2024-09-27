@@ -1,0 +1,21 @@
+{
+   // "compilerOptions": {
+   //    // "baseUrl": "./src", // Set the base directory to '/client/src' for easy path imports
+   //    // "baseUrl": "./", // Set base directory to '/client'
+   //    "baseUrl": "../../mi12c-stay-vista-starter",
+   //    "paths": {
+   //       "*": [
+   //          "node_modules/*"
+   //       ] // Point to node_modules for dependencies
+   //    }
+   // },
+   // "include": [
+   //    "src/**/*", // Include all files in the './client/src' folder
+   //    // "./**/*" // Include all files in the './client' folder
+   // ],
+   // "exclude": [
+   //    "node_modules",
+   //    "dist",
+   //    "package-lock.json"
+   // ] // Exclude node_modules and any build folders
+}

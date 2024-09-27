@@ -1,0 +1,19 @@
+{
+   // "compilerOptions": {
+   //    "baseUrl": "./",
+   //    "paths": {
+   //       "*": [
+   //          "node_modules/*"
+   //       ]
+   //    }
+   // },
+   // "include": [
+   //    // "./**/*"
+   //    "index.js"
+   // ],
+   // "exclude": [
+   //    "node_modules",
+   //    "dist",
+   //    "package-lock.json",
+   // ]
+}

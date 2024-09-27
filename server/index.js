@@ -3,7 +3,7 @@ const app = express();
 require("dotenv").config();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const jwt = require("jsonwebtoken");
 const morgan = require("morgan");
 const port = process.env.PORT || 5000;
@@ -167,6 +167,19 @@ async function run() {
 		app.get("/rooms", async (req, res) => {
 			try {
 				const result = await roomCollection.find().toArray();
+				res.send(result);
+			} catch (error) {
+				console.log("error: ", error);
+				res.status(500).send(error);
+			}
+		});
+
+		//: get a single room data from db using _id
+		app.get("/room/:id", async (req, res) => {
+			try {
+				const id = req.params.id;
+				const query = { _id: new ObjectId(id) };
+				const result = await roomCollection.findOne(query);
 				res.send(result);
 			} catch (error) {
 				console.log("error: ", error);
