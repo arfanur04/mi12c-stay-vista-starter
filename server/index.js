@@ -166,7 +166,11 @@ async function run() {
 		//: get all rooms from db
 		app.get("/rooms", async (req, res) => {
 			try {
-				const result = await roomCollection.find().toArray();
+				const category = req.query.category;
+				// console.log(`category:`, category);
+				let query = {};
+				if (category && category !== "null") query = { category };
+				const result = await roomCollection.find(query).toArray();
 				res.send(result);
 			} catch (error) {
 				console.log("error: ", error);
