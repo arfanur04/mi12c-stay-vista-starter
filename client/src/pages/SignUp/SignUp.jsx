@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 import {
@@ -7,9 +7,17 @@ import {
 	successAlert,
 } from "../../functions/functions";
 import useAuth from "../../hooks/useAuth";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const SignUp = () => {
-	const { createUser, updateUserProfile, loading } = useAuth();
+	const {
+		createUser,
+		updateUserProfile,
+		signInWithGoogle,
+		loading,
+		setLoading,
+	} = useAuth();
+	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -24,6 +32,7 @@ const SignUp = () => {
 
 		try {
 			loadingState();
+			setLoading(true);
 			//: 1. upload image to imgBB and get image url
 			const { data } = await axios.post(
 				`https://api.imgbb.com/1/upload?key=${
@@ -31,22 +40,40 @@ const SignUp = () => {
 				}`,
 				formData
 			);
-			console.log("1_imgBB", data.data.display_url, data);
+			console.log("1_imgBB", data.data.display_url);
 
 			//: 2. create user
-			const firebaseUser = await createUser(email, password);
-			console.log(`2_firebaseUser:`, firebaseUser);
+			await createUser(email, password);
+			console.log(`2_firebase User created Successfully`);
 
 			//: 3. update user profile
 			await updateUserProfile(name, data.data.display_url);
+			console.log("3_user updated Successfully");
 
 			// Swal.close();
+			navigate("/");
 			successAlert("Sign Up Successfully");
 		} catch (error) {
 			console.log("error: ", error);
 			errorAlert(error);
+			setLoading(false);
 		}
 	};
+
+	// handle google sign in
+	const handleGoogleSignIn = async () => {
+		try {
+			loadingState();
+			await signInWithGoogle();
+			navigate("/");
+			successAlert("LogIn Successful");
+		} catch (error) {
+			console.log("error: ", error);
+			errorAlert(error);
+			setLoading(false);
+		}
+	};
+
 	return (
 		<div className="flex items-center justify-center min-h-screen">
 			<div className="flex flex-col max-w-md p-6 text-gray-900 bg-gray-100 rounded-md sm:p-10">
@@ -132,10 +159,14 @@ const SignUp = () => {
 						<button
 							type="submit"
 							disabled={loading}
-							className="w-full py-3 text-white rounded-md bg-rose-500"
+							className="w-full py-3 text-white rounded-md bg-rose-500 disabled:cursor-not-allowed"
 						>
 							{/* Continue */}
-							{loading ? "Daran Vai" : "Continue"}
+							{loading ? (
+								<TbFidgetSpinner className="mx-auto animate-spin" />
+							) : (
+								"Continue"
+							)}
 						</button>
 					</div>
 				</form>
@@ -146,10 +177,14 @@ const SignUp = () => {
 					</p>
 					<div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
 				</div>
-				<div className="flex items-center justify-center p-2 m-3 space-x-2 border border-gray-300 cursor-pointer border-rounded">
+				<button
+					onClick={handleGoogleSignIn}
+					disabled={loading}
+					className="flex items-center justify-center p-2 m-3 space-x-2 border border-gray-300 disabled:cursor-not-allowed border-rounded"
+				>
 					<FcGoogle size={32} />
 					<p>Continue with Google</p>
-				</div>
+				</button>
 				<p className="px-6 text-sm text-center text-gray-400">
 					Already have an account?{" "}
 					<Link

@@ -8,33 +8,35 @@ export const loadingState = () => {
 		didOpen: () => {
 			Swal.showLoading();
 		},
+		// allowOutsideClick: false,
+		// allowEscapeKey: false,
 	});
 };
 
 export const errorAlert = (error) => {
 	Swal.fire({
 		icon: "error",
-		title: `${error?.code}`,
-		text: `${error?.message}`,
+		title: `${error?.code || error}`,
+		text: `${error?.message || ""}`,
 	});
 };
 
-export const successAlert = (title) => {
+export const successAlert = (title, time = true) => {
 	Swal.fire({
 		position: "top-end",
 		icon: "success",
 		title: `${title}`,
 		showConfirmButton: false,
-		timer: 1500,
+		...(time && { timer: 1500 }),
 	});
 };
 
-export const infoAlert = (title) => {
+export const infoAlert = (title, time = true) => {
 	Swal.fire({
 		position: "top-end",
 		icon: "info",
 		title: `${title}`,
 		showConfirmButton: false,
-		timer: 1500,
+		...(time && { timer: 1500 }),
 	});
 };

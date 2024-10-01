@@ -12,7 +12,7 @@ const Card = ({ room }) => {
 					<img
 						src={room?.image}
 						alt="room"
-						className="object-cover w-full h-full transition group-hover:scale-150"
+						className="object-cover w-full h-full transition group-hover:scale-110"
 					/>
 					<div className="absolute top-3 right-3"></div>
 				</div>
