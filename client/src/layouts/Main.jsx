@@ -3,8 +3,8 @@ import Navbar from "../components/Shared/Navbar/Navbar";
 import Footer from "../components/Shared/Footer/Footer";
 
 export const websiteTitle = "StayVista";
-// export const apiUrl = `${import.meta.env.VITE_API_URL}`;
-export const apiUrl = `http://${window.location.hostname}:5000`;
+export const apiUrl = `${import.meta.env.VITE_API_URL}`;
+// export const apiUrl = `http://${window.location.hostname}:5000`;
 
 const Main = () => {
 	return (

@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export const loadingState = () => {
+export const loadingState = (notAllowedOutsideClick) => {
 	Swal.fire({
 		background: "rgba(0, 0, 0, 0.0)",
 		backdrop: "rgba(0, 0, 0, 0.5)",
@@ -8,6 +8,10 @@ export const loadingState = () => {
 		didOpen: () => {
 			Swal.showLoading();
 		},
+		...(notAllowedOutsideClick && {
+			allowOutsideClick: false,
+			allowEscapeKey: false,
+		}),
 		// allowOutsideClick: false,
 		// allowEscapeKey: false,
 	});
